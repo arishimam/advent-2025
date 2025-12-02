@@ -25,31 +25,25 @@ func handleInput() ([]string, error) {
 	return lines, scanner.Err()
 }
 
+func part1(lines []string) {
+
+}
+
+func part2() {
+
+}
+
 func main() {
 	lines, err := handleInput()
 	if err != nil {
 		panic(err)
 	}
 
-	/*
-		tester := []string{
-			"L68",
-			"L30",
-			"R48",
-			"L5",
-			"R60",
-			"L55",
-			"L1",
-			"L99",
-			"R14",
-			"L82",
-		}
-	*/
-
 	curr := 50
 	count := 0
 
 	for _, turn := range lines {
+		direction := turn[0]
 		num, err := strconv.Atoi(turn[1:])
 
 		if err != nil {
@@ -57,37 +51,29 @@ func main() {
 			return
 		}
 
-		prev := curr
-		if turn[0] == 'L' {
-			curr -= num
+		fullTurns := num / 100
+		partialTurn := num % 100
+
+		count += fullTurns
+
+		if direction == 'L' {
+			curr -= partialTurn
+		} else if direction == 'R' {
+			curr += partialTurn
 		} else {
-			curr += num
-		}
-		if curr != 0 {
-			if (prev > 0 && curr < 0) || (prev < 0 && curr > 0) {
-				count++
-			}
-
+			fmt.Println("NEITHER DIRECTION VALID")
 		}
 
-		val := curr / 100
-		if val != 0 {
-			if val < 0 {
-				val *= -1
-			}
-
-			count += val
-
-		}
-
-		curr = curr % 100
-
-		if curr == 0 {
+		if partialTurn != 0 && (curr <= 0 || curr >= 100) {
 			count++
 		}
 
 		if curr < 0 {
 			curr = 100 + curr
+		}
+
+		if curr > 100 {
+			curr = curr % 100
 		}
 
 	}
