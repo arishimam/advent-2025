@@ -21,13 +21,7 @@ func handleInput() ([]string, error) {
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
-	// fmt.Println(lines)
-	/*
-		for _, l := range lines {
-			fmt.Println(l)
 
-		}
-	*/
 	return lines, scanner.Err()
 }
 
@@ -63,15 +57,21 @@ func main() {
 			return
 		}
 
+		prev := curr
 		if turn[0] == 'L' {
 			curr -= num
 		} else {
 			curr += num
 		}
+		if curr != 0 {
+			if (prev > 0 && curr < 0) || (prev < 0 && curr > 0) {
+				count++
+			}
+
+		}
 
 		val := curr / 100
 		if val != 0 {
-			// fmt.Println("val = ", val)
 			if val < 0 {
 				val *= -1
 			}
