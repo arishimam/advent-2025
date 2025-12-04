@@ -25,15 +25,8 @@ func handleInput() ([]string, error) {
 	return lines, scanner.Err()
 }
 
-func part1(lines []string) {
-
-}
-
-func part2() {
-
-}
-
 func main() {
+
 	lines, err := handleInput()
 	if err != nil {
 		panic(err)
@@ -56,6 +49,7 @@ func main() {
 
 		count += fullTurns
 
+		prev := curr
 		if direction == 'L' {
 			curr -= partialTurn
 		} else if direction == 'R' {
@@ -64,7 +58,7 @@ func main() {
 			fmt.Println("NEITHER DIRECTION VALID")
 		}
 
-		if partialTurn != 0 && (curr <= 0 || curr >= 100) {
+		if prev != 0 && (curr < 0 || curr > 100) {
 			count++
 		}
 
@@ -72,8 +66,11 @@ func main() {
 			curr = 100 + curr
 		}
 
-		if curr > 100 {
+		if curr >= 100 {
 			curr = curr % 100
+		}
+		if curr == 0 {
+			count++
 		}
 
 	}
